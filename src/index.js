@@ -2,7 +2,12 @@ import './css/styles.css';
 import ImagesApiService from './image-service';
 import LoadMoreBtn from './load-more-btn';
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
+// new SimpleLightbox('.gallery a', {captions:true, captionSelector:'img', captionType:'attr', captionsData:'alt',captionPosition:'bottom', captionDelay:250});
+
+var lightbox = new SimpleLightbox('.gallery a', { /* options */ });
 
 
 const refs = {
@@ -58,7 +63,9 @@ function renderImages(images){
     const markup = images.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
         return `
         <div class="photo-card">
+        <a href="${largeImageURL}">
         <img src="${webformatURL}" alt="${tags}" loading="lazy" width="450" />
+        </a>
         <div class="info">
             <p class="info-item">
             <b>Likes</b>
@@ -83,8 +90,23 @@ function renderImages(images){
 
     refs.imagesList.insertAdjacentHTML('beforeend', markup);
 
+    lightbox.refresh();
+    
+    smoothScrolling();
+
 }
 
 function clearImagesContainer() {
     refs.imagesList.innerHTML = '';
+}
+
+function smoothScrolling() {
+    const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
+  
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: "smooth",
+  });
 }
