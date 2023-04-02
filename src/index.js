@@ -4,6 +4,7 @@ import LoadMoreBtn from './load-more-btn';
 import Notiflix from 'notiflix';
 
 
+
 const refs = {
     searchForm: document.querySelector('.search-form'),
     imagesList: document.querySelector('.gallery')
@@ -33,6 +34,7 @@ function onSearch(e) {
 async function fetchImages() {
     console.log(imagesApiService.page);
     const images = await imagesApiService.fetchImages();
+    // console.log(images);
 
     if (images.totalHits === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
