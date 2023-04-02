@@ -23,7 +23,6 @@ export default class ImagesApiService {
                
         // const response = await fetch(url);
         const response = await axios.get(url);
-        //  console.log(response.data);
         this.incrementPage();
         // const images = await response.json();
         const images = response.data;

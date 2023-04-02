@@ -5,10 +5,7 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// new SimpleLightbox('.gallery a', {captions:true, captionSelector:'img', captionType:'attr', captionsData:'alt',captionPosition:'bottom', captionDelay:250});
-
-var lightbox = new SimpleLightbox('.gallery a', { /* options */ });
-
+var lightbox =  new SimpleLightbox('.gallery a', {captions:true, captionSelector:'img', captionType:'attr', captionsData:'alt',captionPosition:'bottom', captionDelay:250});
 
 const refs = {
     searchForm: document.querySelector('.search-form'),
@@ -30,16 +27,19 @@ function onSearch(e) {
     clearImagesContainer();
 
     imagesApiService.query  = e.currentTarget.elements.searchQuery.value;
-    
     imagesApiService.resetPage();
+    console.log(imagesApiService.query);
+    if (imagesApiService.query==='')  {
+       return Notiflix.Notify.failure('What do you want to find?')
+    }
+
     fetchImages();
     
 }
 
 async function fetchImages() {
-    console.log(imagesApiService.page);
+    // console.log(imagesApiService.page);
     const images = await imagesApiService.fetchImages();
-    // console.log(images);
 
     if (images.totalHits === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -59,7 +59,7 @@ async function fetchImages() {
 }
 
 function renderImages(images){
-    // console.log(images);
+
     const markup = images.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
         return `
         <div class="photo-card">
