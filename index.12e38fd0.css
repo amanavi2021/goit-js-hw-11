@@ -1,0 +1,2 @@
+.search-form{background-color:#295ff2;justify-content:center;align-items:center;padding:10px;display:flex}.gallery{flex-wrap:wrap;align-items:baseline;gap:10px;display:flex}.photo-card{flex-basis:calc(25% - 7.5px)}.info{justify-content:space-between;padding:10px 50px;display:flex}.info-item{flex-direction:column;align-items:center;display:flex}.is-hidden{width:1px;height:1px;white-space:nowrap;-webkit-clip-path:inset(100%);clip-path:inset(100%);clip:rect(0 0 0 0);border:0;margin:-1px;padding:0;position:absolute;overflow:hidden}
+/*# sourceMappingURL=index.12e38fd0.css.map */
