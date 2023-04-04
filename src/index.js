@@ -20,7 +20,7 @@ const loadMoreBtn = new LoadMoreBtn({
 const imagesApiService = new ImagesApiService();
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.button.addEventListener('click', fetchImages);
+loadMoreBtn.button.addEventListener('click', onLoadMore);
 
 function onSearch(e) {
     e.preventDefault();  
@@ -37,13 +37,19 @@ function onSearch(e) {
     
 }
 
+function onLoadMore() {
+    fetchImages();
+    smoothScrolling();
+}
+
 async function fetchImages() {
-    // console.log(imagesApiService.page);
     const images = await imagesApiService.fetchImages();
 
     if (images.totalHits === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+        loadMoreBtn.hide();
     } else {
+        renderImages(images.hits);
         if (imagesApiService.page === 2) {
             Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
           }
@@ -53,8 +59,7 @@ async function fetchImages() {
         } else {
             loadMoreBtn.show();
         }
-            renderImages(images.hits);
-                    
+                               
     }
 }
 
@@ -91,8 +96,6 @@ function renderImages(images){
     refs.imagesList.insertAdjacentHTML('beforeend', markup);
 
     lightbox.refresh();
-    
-    smoothScrolling();
 
 }
 
